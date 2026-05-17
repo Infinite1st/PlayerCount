@@ -2,5 +2,5 @@
 
 #include "RE/Skyrim.h"
 #include "SKSE/SKSE.h"
-
+#include "log.h"
 using namespace std::literals;
