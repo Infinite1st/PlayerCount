@@ -18,11 +18,11 @@ void Config::Load()
         ini.SetLongValue("General", "IntervalMinutes", 5,
             "; Интервал между уведомлениями в минутах (1-60)");
         ini.SaveFile(path.string().c_str());
-        log::info("Config: created default PlayerCount.ini");
+        logger::info("Config: created default PlayerCount.ini");
         return;
     }
 
     int v = static_cast<int>(ini.GetLongValue("General", "IntervalMinutes", 5));
     m_interval.store(std::clamp(v, 1, 60));
-    log::info("Config: IntervalMinutes = {}", m_interval.load());
+    logger::info("Config: IntervalMinutes = {}", m_interval.load());
 }
