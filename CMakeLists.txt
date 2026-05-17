@@ -36,6 +36,8 @@ endif()
 
 # Setup your SKSE plugin as an SKSE plugin!
 find_package(CommonLibSSE CONFIG REQUIRED)
+find_package(CURL REQUIRED)
+find_package(nlohmann_json CONFIG REQUIRED)
 find_package(directxtk CONFIG REQUIRED)
 include(cmake/headerlist.cmake)
 include(cmake/sourcelist.cmake)
@@ -43,6 +45,7 @@ add_commonlibsse_plugin(${PROJECT_NAME} SOURCES ${headers} ${sources}) # <--- sp
 
 target_compile_features(${PROJECT_NAME} PRIVATE cxx_std_23) # <--- use C++23 standard
 target_precompile_headers(${PROJECT_NAME} PRIVATE src/PCH.h) # <--- PCH.h is required!
+target_link_libraries(${PROJECT_NAME} PRIVATE CURL::libcurl nlohmann_json::nlohmann_json)
 
 target_include_directories(
 	"${PROJECT_NAME}"
