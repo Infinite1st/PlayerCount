@@ -6,6 +6,7 @@
         "commonlibsse-ng-fork",
         "simpleini",
         "nlohmann-json",
-        { "name": "curl", "features": ["ssl"] }
+        { "name": "curl", "features": ["ssl"] },
+        "directxtk"
     ]
 }
