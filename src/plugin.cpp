@@ -29,7 +29,7 @@ SKSEPluginLoad(const SKSE::LoadInterface* skse)
     SKSE::Init(skse);
     SetupLog();
 
-    logger::info("PlayerCount loading...");
+    log::info("PlayerCount loading...");
     Config::Get().Load();
 
     auto* messaging = SKSE::GetMessagingInterface();
@@ -37,6 +37,6 @@ SKSEPluginLoad(const SKSE::LoadInterface* skse)
         return false;
     }
 
-    logger::info("PlayerCount loaded.");
+    log::info("PlayerCount loaded.");
     return true;
 }
