@@ -5,6 +5,7 @@ set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>DLL")
 find_package(CommonLibSSE CONFIG REQUIRED)
 find_package(CURL REQUIRED)
 find_package(nlohmann_json CONFIG REQUIRED)
+find_package(directxtk CONFIG REQUIRED)
 
 include(cmake/headerlist.cmake)
 include(cmake/sourcelist.cmake)
