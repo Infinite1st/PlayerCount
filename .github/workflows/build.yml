@@ -1,8 +1,7 @@
 name: Build PlayerCount
 
 on:
-  push:
-    branches: [main, master]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -35,9 +34,17 @@ jobs:
           cmake --build build --config Release --parallel
           if ($LASTEXITCODE -ne 0) { exit 1 }
 
+      - name: Assemble package
+        shell: pwsh
+        run: |
+          New-Item -Force -ItemType Directory "pkg\SKSE\Plugins" | Out-Null
+          Copy-Item "build\Release\PlayerCount.dll" "pkg\SKSE\Plugins\PlayerCount.dll"
+          Copy-Item "Data\SKSE\Plugins\PlayerCount.ini" "pkg\SKSE\Plugins\PlayerCount.ini"
+          Compress-Archive -Path "pkg\*" -DestinationPath "PlayerCount.zip" -Force
+
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: TemplatePlugin
-          path: build/Release/TemplatePlugin.dll
+          name: PlayerCount
+          path: PlayerCount.zip
           retention-days: 30
