@@ -1,38 +1,42 @@
-#include "log.h"
+#include "PCH.h"
+#include "Config.h"
+#include "SteamPlayerService.h"
 
-
-void OnDataLoaded()
+namespace
 {
-   
+    void OnFetch(int count, bool connected)
+    {
+        std::string msg = connected
+            ? "Skyrim players online: " + std::to_string(count)
+            : "Skyrim players online: N/A";
+
+        if (auto* task = SKSE::GetTaskInterface()) {
+            task->AddTask([msg]() { RE::DebugNotification(msg.c_str()); });
+        }
+    }
+
+    void MessageHandler(SKSE::MessagingInterface::Message* a_msg)
+    {
+        if (a_msg->type == SKSE::MessagingInterface::kDataLoaded) {
+            SteamPlayerService::Get().SetCallback(OnFetch);
+            SteamPlayerService::Get().Start();
+        }
+    }
 }
 
-void MessageHandler(SKSE::MessagingInterface::Message* a_msg)
+SKSEPluginLoad(const SKSE::LoadInterface* skse)
 {
-	switch (a_msg->type) {
-	case SKSE::MessagingInterface::kDataLoaded:
-        
-		break;
-	case SKSE::MessagingInterface::kPostLoad:
-		break;
-	case SKSE::MessagingInterface::kPreLoadGame:
-		break;
-	case SKSE::MessagingInterface::kPostLoadGame:
-        break;
-	case SKSE::MessagingInterface::kNewGame:
-		break;
-	}
-}
-
-SKSEPluginLoad(const SKSE::LoadInterface *skse) {
     SKSE::Init(skse);
-	SetupLog();
+    SetupLog();
 
+    logger::info("PlayerCount loading...");
+    Config::Get().Load();
 
-    auto messaging = SKSE::GetMessagingInterface();
-	if (!messaging->RegisterListener("SKSE", MessageHandler)) {
-		return false;
-	}
+    auto* messaging = SKSE::GetMessagingInterface();
+    if (!messaging->RegisterListener("SKSE", MessageHandler)) {
+        return false;
+    }
 
-	
+    logger::info("PlayerCount loaded.");
     return true;
 }
