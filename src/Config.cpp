@@ -8,7 +8,7 @@ void Config::Load()
     auto dir = SKSE::log::log_directory();
     if (!dir) return;
 
-    std::filesystem::path path = dir->parent_path() / "Plugins" / "PlayerCount.ini";
+    std::filesystem::path path = "Data\\SKSE\\Plugins\\PlayerCount.ini";
 
     CSimpleIniA ini;
     ini.SetUnicode();
