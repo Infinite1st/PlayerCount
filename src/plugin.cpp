@@ -27,7 +27,6 @@ namespace
 SKSEPluginLoad(const SKSE::LoadInterface* skse)
 {
     SKSE::Init(skse);
-    SetupLog();
 
     Config::Get().Load();
 
