@@ -7,8 +7,8 @@ namespace
     void OnFetch(int count, bool connected)
     {
         std::string msg = connected
-            ? "Skyrim players online: " + std::to_string(count)
-            : "Skyrim players online: N/A";
+            ? "Players in-game: " + std::to_string(count)
+            : "Players in-game: N/A";
 
         if (auto* task = SKSE::GetTaskInterface()) {
             task->AddTask([msg]() { RE::DebugNotification(msg.c_str()); });
